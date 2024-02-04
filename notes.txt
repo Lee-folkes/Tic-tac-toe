@@ -1,0 +1,20 @@
+player class 
+
+constuctors:
+playerName: player1 or player2
+score: 0
+playerIcon: svg
+iscpu: bool
+wins: 0
+ties: 0
+isturn: bool
+
+methods:
+incScore - increase score by one
+incWin
+incTie
+toggleTurn - toggle isturn bool
+cpuMove - random cpuMove
+
+
+

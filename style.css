@@ -1,0 +1,272 @@
+:root{
+    /* colours */
+    --colour-bg-900: #1a2a33;
+    --colour-bg-800: #1f3641;
+    --colour-accent-700: #31c3bd;
+    --colour-accent-700-hover: #65e9e4;
+    --colour-accent-600: #f2b137;
+    --colour-accent-600-hover: #ffc860;
+    --colour-neutral-500: #a8bfc9;
+    --colour-neutral-500-hover: #dbe8ed;
+
+    /* sizes */
+    --size-100: 0.25rem;
+    --size-200: 0.5rem;
+    --size-300: 0.75rem;
+    --size-400: 1rem;
+    --size-500: 1.5rem;
+    --size-600: 2rem;
+    --size-700: 3rem;
+    --size-800: 4rem;
+    --size-900: 8.5rem;
+
+    /* typography */
+    --fs-heading-l: 40px;
+    --fs-heading-m: 24px;
+    --fs-heading-s: 20px;
+    --fs-heading-xs: 16px;
+    --fs-body: 14px;
+  }
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  background-color: var(--colour-bg-900);
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+   scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* start screen */
+.new-game-scr{
+    display: flex;
+    flex-direction: column;
+    min-width: 460px;
+    margin-inline: auto;
+    align-items: center;
+    justify-content: center;
+    margin-block: 25dvh;
+    gap: 2rem;
+    text-align: center;
+}
+
+.new-game-card{
+    background-color: var(--colour-bg-800);
+    padding: 1rem;
+    border-radius: .5rem;
+    min-width: 460px;
+    box-shadow: 0 8px #10212a;
+}
+
+.new-game-card h1{
+    font-size: var(--fs-heading-xs);
+    color: var(--colour-neutral-500);
+}
+
+.new-game-card h2{
+    font-size: var(--fs-body);
+    color: var(--colour-neutral-500);
+    opacity: .5;
+}
+
+.mark-choice-wrapper{
+    display: flex;
+    flex-direction: row;
+    background-color: var(--colour-bg-900);
+    justify-content: space-between;
+    padding: .5rem;
+    margin-block: 1rem;
+    border-radius: .5rem;
+
+}
+
+.mark{
+    min-width: 198px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .7rem;
+}
+
+.mark-x, .mark-o{
+    cursor: pointer;
+    transition: background-color .2s ease-out;
+    border-radius: 0.5rem;
+}
+
+.mark-x:not(.mark-active):hover, .mark-o:not(.mark-active):hover{
+    background-color: var(--colour-bg-800);
+}
+
+.mark-active{
+    background-color: var(--colour-neutral-500);
+    border-radius: .5rem;
+}
+
+.mark-choice-wrapper img{
+    aspect-ratio: 1;
+    width: 32px;
+    cursor: pointer;
+}
+
+.new-game-buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.new-game-buttons button{
+    min-width: 460px;
+    border-radius: .5rem;
+    padding: 0.5rem 0 0.3rem 0;
+    font-size: var(--fs-heading-s);
+    font-weight: 700;
+    color: var(--colour-bg-900);
+    border: none;
+    cursor: pointer;
+    transition: background-color .3s ease-in-out ;
+}
+
+.new-game-cpu-button{
+    background-color: var(--colour-accent-600);
+    box-shadow: 0 8px #cc8b13;
+}
+
+.new-game-player-button{
+    background-color: var(--colour-accent-700);
+    box-shadow: 0 8px #118c87;
+}
+.new-game-cpu-button:hover{
+    background-color: var(--colour-accent-600-hover);
+}
+
+.new-game-player-button:hover{
+    background-color: var(--colour-accent-700-hover)
+}
+
+
+
+
+
+
+
+
+/* utilities */
+.icon-filter-silver{
+    filter: brightness(0) saturate(100%) invert(93%) sepia(2%) saturate(5623%) hue-rotate(173deg) brightness(88%) contrast(77%);
+}
+
+.icon-filter-bg{
+    filter: brightness(0) saturate(100%) invert(11%) sepia(6%) saturate(3766%) hue-rotate(159deg) brightness(100%) contrast(90%);
+}
+
+.display-none{
+    display: none !important;
+  }
+  
+  .container{
+    --max-width: 1110px;
+    --container-padding: 1rem;
+  
+    width: min(var(--max-width), 100% - var(--container-padding) * 2);
+    margin-inline: auto;
+  }
+
+      
+ /* spacing */
+ .padding-block-900 {
+    padding-block: var(--size-900);
+}
+
+.padding-block-700 {
+    padding-block: var(--size-700);
+}
+
+.margin-bottom-700 {
+    margin-block-end: var(--size-700);
+}
+
+.margin-top-600 {
+    margin-block-start: var(--size-600);
+}
+
+.margin-top-700 {
+    margin-block-start: var(--size-700);
+}
+
+.margin-top-800 {
+    margin-block-start: var(--size-800);
+}
+
+.margin-top-900 {
+    margin-block-start: var(--size-900);
+}      

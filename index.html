@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- STYLES -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- TYPOGRAPHY -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+
+    <title>Tic Tac Toe</title>
+</head>
+<body>
+    <main>
+
+        <!-- NEW GAME SCREEN -->
+        <div class="new-game-scr container">
+            <div class="logo"><img src="./assets/logo.svg" alt="" srcset=""></div>
+            <div class="new-game-card">
+                <h1>PICK PLAYER 1'S MARK</h1>
+                <div class="mark-choice-wrapper">
+                    <div class="mark-x mark"><img class="icon-filter-silver" src="./assets/icon-x.svg" alt="" srcset=""></div>
+                    <div class="mark-o mark mark-active"><img class="icon-filter-bg" src="./assets/icon-o.svg" alt="" srcset=""></div>
+                </div>
+                <h2>REMEMBER : X GOES FIRST</h2>
+            </div>
+            <div class="new-game-buttons">
+                <button class="new-game-cpu-button">NEW GAME (VS CPU)</button>
+                <button class="new-game-player-button">NEW GAME (VS PLAYER)</button>
+            </div>
+        </div>
+
+
+    </main>
+    <!-- JS -->
+    <script src="./app.js"></script>
+</body>
+</html>
