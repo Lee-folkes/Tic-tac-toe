@@ -29,8 +29,8 @@ Player = class{
         return this;
        
     }
-
 }
+
 //get elements
 const startIconXimg = document.querySelector('.mark-x img');
 const startIconOimg = document.querySelector('.mark-o img');
@@ -38,8 +38,14 @@ const startIconX = document.querySelector('.mark-x');
 const startIconO = document.querySelector('.mark-o');
 const newGameCpuBtn = document.querySelector('.new-game-cpu-button');
 const newGamePlayerBtn = document.querySelector('.new-game-player-button');
-let playerOneIcon = null;
-let playerTwoIcon = null;
+
+//assets
+const xIcon = './assets/icon-x.svg';
+const oIcon = './assets/icon-0.svg'
+
+//define players
+const playerOne = new Player('Player One', oIcon, false);
+const playerTwo = new Player('Player Two', xIcon, false);
 
 //player mark menu toggle states
 startIconO.addEventListener('click', e =>{
@@ -49,9 +55,11 @@ startIconO.addEventListener('click', e =>{
         startIconOimg.classList.add('icon-filter-bg');
         startIconXimg.classList.add('icon-filter-silver');
         startIconXimg.classList.remove('icon-filter-bg');
+
         //set chosen marker
-        playerOneIcon = 'O';
-        playerTwoIcon = 'X';
+        //replace with urls to assets
+        playerOne.playerIcon = oIcon; 
+        playerTwo.playerIcon = xIcon;
 
     }
 });
@@ -63,46 +71,39 @@ startIconX.addEventListener('click', e =>{
         startIconXimg.classList.add('icon-filter-bg');
         startIconOimg.classList.remove('icon-filter-bg');
         startIconOimg.classList.add('icon-filter-silver');
+
         //set chosen marker
-        playerOneIcon = 'X';
-        playerTwoIcon = 'O';
+        //replace with urls to assets
+        playerOne.playerIcon = oIcon;
+        playerTwo.playerIcon = xIcon;
     }
 });
 
-
-
-//setup player objects on button press
-newGameCpuBtn.addEventListener ('click', e => {
-    const playerOne = new Player('Player One', playerOneIcon, false);
-    const playerTwo = new Player('Player Two', playerTwoIcon, true);
-
-    //decide who goes first
-    if(playerOne.playerIcon === 'X'){
+function goesFirst(){
+    if(playerOne.playerIcon === xIcon){
         playerOne.toggleTurn();
     }else{
         playerTwo.toggleTurn();
     };
-    
+}
+
+//setup player objects on button click
+newGameCpuBtn.addEventListener ('click', e => {
+    //game is against cpu
+    playerTwo.isCpu = true;
+    //decide who goes first
+    goesFirst();
+ 
     console.log(playerOne);
     console.log(playerTwo);
-})
+});
 
 newGamePlayerBtn.addEventListener ('click', e => {
-    const playerOne = new Player('Player One', playerOneIcon, false);
-    const playerTwo = new Player('Player Two', playerTwoIcon, false);
-
     //decide who goes first
-    if(playerOne.playerIcon === 'X'){
-        playerOne.toggleTurn();
-    }else{
-        playerTwo.toggleTurn();
-    };
+    goesFirst();
     
     console.log(playerOne);
     console.log(playerTwo);
-    
-})
-
-
+});
 
 // const playerOne = new Player('Player One', 'x', false);
