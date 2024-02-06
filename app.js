@@ -38,6 +38,8 @@ const startIconX = document.querySelector('.mark-x');
 const startIconO = document.querySelector('.mark-o');
 const newGameCpuBtn = document.querySelector('.new-game-cpu-button');
 const newGamePlayerBtn = document.querySelector('.new-game-player-button');
+const newGameScr = document.querySelector('.new-game-scr');
+const mainGameScr = document.querySelector('.main-game-screen')
 
 //assets
 const xIcon = './assets/icon-x.svg';
@@ -76,6 +78,7 @@ startIconX.addEventListener('click', e =>{
         //replace with urls to assets
         playerOne.playerIcon = oIcon;
         playerTwo.playerIcon = xIcon;
+
     }
 });
 
@@ -87,12 +90,21 @@ function goesFirst(){
     };
 }
 
+function newGameStart(){
+     //Hide new game screen
+     newGameScr.classList.add('display-none');
+     //Show main game screen
+     mainGameScr.classList.remove('display-none');
+}
+
 //setup player objects on button click
 newGameCpuBtn.addEventListener ('click', e => {
     //game is against cpu
     playerTwo.isCpu = true;
     //decide who goes first
     goesFirst();
+    //switch to main game screen
+    newGameStart();
  
     console.log(playerOne);
     console.log(playerTwo);
@@ -101,9 +113,12 @@ newGameCpuBtn.addEventListener ('click', e => {
 newGamePlayerBtn.addEventListener ('click', e => {
     //decide who goes first
     goesFirst();
+    //switch to main game screen
+    newGameStart();
     
     console.log(playerOne);
     console.log(playerTwo);
 });
 
 // const playerOne = new Player('Player One', 'x', false);
+
