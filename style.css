@@ -296,6 +296,7 @@ select {
     transition: opacity .3s ease-in;
     aspect-ratio: 1;
     width: max-content;
+    cursor: pointer;
 }
 
 .hover-image:hover{

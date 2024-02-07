@@ -46,6 +46,7 @@ const xLabel = document.querySelector('.x-player');
 const oLabel = document.querySelector('.o-player');
 const playerIndicator = document.querySelector('.active-player-icon');
 const hoverImageSrc = document.querySelectorAll('.hover-image');
+const gridItems = document.querySelectorAll('.main-grid');
 
 //assets
 //solid icons
@@ -58,8 +59,8 @@ const oIconHover = './assets/icon-o-outline.svg';
 
 
 //define players
-const playerOne = new Player('Player One', oIcon, oIconHover, false);
-const playerTwo = new Player('Player Two', xIcon, xIconHover, false);
+const playerOne = new Player('PlayerOne', oIcon, oIconHover, false);
+const playerTwo = new Player('PlayerTwo', xIcon, xIconHover, false);
 
 //player score labels
 let xScoreLabel;
@@ -70,6 +71,17 @@ let activePlayer;
 
 //hover image
 let hoverImage;
+
+//tiles
+const tile1 = document.querySelector('.tile-1');
+const tile2 = document.querySelector('.tile-2');
+const tile3 = document.querySelector('.tile-3');
+const tile4 = document.querySelector('.tile-4');
+const tile5 = document.querySelector('.tile-5');
+const tile6 = document.querySelector('.tile-6');
+const tile7 = document.querySelector('.tile-7');
+const tile8 = document.querySelector('.tile-8');
+const tile9 = document.querySelector('.tile-9');
 
 //player mark menu toggle states
 startIconO.addEventListener('click', e =>{
@@ -188,6 +200,18 @@ function setPlayerLabel(){
 
 }
 
+function checkWin(){
+    if(tile1.classList.contains(activePlayer.PlayerName) && tile2.classList.contains(activePlayer.PlayerName) && tile3.classList.contains(activePlayer.PlayerName)
+    || tile4.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile6.classList.contains(activePlayer.PlayerName)
+    || tile7.classList.contains(activePlayer.PlayerName) && tile8.classList.contains(activePlayer.PlayerName) && tile8.classList.contains(activePlayer.PlayerName)
+    || tile1.classList.contains(activePlayer.PlayerName) && tile4.classList.contains(activePlayer.PlayerName) && tile7.classList.contains(activePlayer.PlayerName)
+    || tile2.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile8.classList.contains(activePlayer.PlayerName)
+    || tile3.classList.contains(activePlayer.PlayerName) && tile6.classList.contains(activePlayer.PlayerName) && tile9.classList.contains(activePlayer.PlayerName)
+    || tile1.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile9.classList.contains(activePlayer.PlayerName)
+    || tile3.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile7.classList.contains(activePlayer.PlayerName))
+    {console.log(`${activePlayer.PlayerName} WINS!`)} 
+}
+
 
 //define active player
 function playerActive(){
@@ -213,38 +237,33 @@ function setHoverImage(){
 mainGrid.addEventListener('click', e =>{
     if(e.target.classList.contains('hover-image') && !e.target.classList.contains('checked')){
         e.target.classList.add('display-none');
-        e.target.classList.add('checked')
+        e.target.classList.add('checked');
+        e.target.parentElement.classList.add(activePlayer.PlayerName);
         e.target.parentElement.children[1].setAttribute('src', activePlayer.playerIcon);
+
         
         if(playerOne.isTurn === true){
             playerOne.isTurn = false;
             playerTwo.isTurn = true;
+
         }else{
             playerTwo.isTurn = false;
             playerOne.isTurn = true;
         }
+        checkWin();
         playerActive();
         playerIndicator.src = activePlayer.playerIcon;
         setHoverImage();
         
         console.log(playerOne);
         console.log(playerTwo);
-    }
+        
+        
+        
+    }   
     
 })
 
-// mainGrid.addEventListener('mouseover', (e) =>{
-//         console.log(e.target.children)
-//         console.log('hovered');
-//         // e.target.children.img.setAttribute('src', activePlayer.hoverIcon);
-//         e.target.children[0].src = activePlayer.hoverIcon;
-
-//         mainGrid.addEventListener('mouseout', (e) => {
-//             e.target.children[0].src = '';
-//         })
-        
-//     }
-// )
 
 
 
