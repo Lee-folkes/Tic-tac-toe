@@ -281,11 +281,25 @@ select {
 }
 
 .tile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--colour-bg-800);
     min-width: 140px;
     aspect-ratio: 1;
     box-shadow: 0 8px #10212a;
     border-radius: 1rem;
+}
+
+.hover-image{
+    opacity: 0;
+    transition: opacity .3s ease-in;
+    aspect-ratio: 1;
+    width: max-content;
+}
+
+.hover-image:hover{
+    opacity: 1;
 }
 
 /* bottom section */
