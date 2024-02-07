@@ -40,6 +40,8 @@ const newGameCpuBtn = document.querySelector('.new-game-cpu-button');
 const newGamePlayerBtn = document.querySelector('.new-game-player-button');
 const newGameScr = document.querySelector('.new-game-scr');
 const mainGameScr = document.querySelector('.main-game-screen')
+const xLabel = document.querySelector('.x-player');
+const oLabel = document.querySelector('.o-player');
 
 //assets
 const xIcon = './assets/icon-x.svg';
@@ -48,6 +50,10 @@ const oIcon = './assets/icon-0.svg'
 //define players
 const playerOne = new Player('Player One', oIcon, false);
 const playerTwo = new Player('Player Two', xIcon, false);
+
+//player score labels
+let xScoreLabel;
+let oScoreLabel;
 
 //player mark menu toggle states
 startIconO.addEventListener('click', e =>{
@@ -76,8 +82,8 @@ startIconX.addEventListener('click', e =>{
 
         //set chosen marker
         //replace with urls to assets
-        playerOne.playerIcon = oIcon;
-        playerTwo.playerIcon = xIcon;
+        playerOne.playerIcon = xIcon;
+        playerTwo.playerIcon = oIcon;
 
     }
 });
@@ -103,6 +109,8 @@ newGameCpuBtn.addEventListener ('click', e => {
     playerTwo.isCpu = true;
     //decide who goes first
     goesFirst();
+    //Set player labels
+    setPlayerLabel();
     //switch to main game screen
     newGameStart();
  
@@ -113,12 +121,41 @@ newGameCpuBtn.addEventListener ('click', e => {
 newGamePlayerBtn.addEventListener ('click', e => {
     //decide who goes first
     goesFirst();
+    //Set player labels
+    setPlayerLabel();
     //switch to main game screen
     newGameStart();
-    
+
     console.log(playerOne);
     console.log(playerTwo);
 });
 
-// const playerOne = new Player('Player One', 'x', false);
+
+//player labels on score section
+function setPlayerLabel(){
+    if(playerOne.playerIcon === xIcon && playerTwo.isCpu)
+    {
+        xScoreLabel = ' (You)';
+        oScoreLabel = ' (CPU)';
+    }
+    else if(playerOne.playerIcon === oIcon && playerTwo.isCpu)
+    {
+        oScoreLabel = ' (You)';
+        xScoreLabel = ' (CPU)';
+    } 
+    else if(playerOne.playerIcon === xIcon && !playerTwo.isCpu)
+    {
+        xScoreLabel = ' (P1)';
+        oScoreLabel = ' (P2)';
+    }
+    else
+    {  
+        oScoreLabel = ' (P1)';
+        xScoreLabel = ' (P2)';
+    };
+
+    xLabel.textContent = xScoreLabel;
+    oLabel.textContent = oScoreLabel;
+
+}
 
