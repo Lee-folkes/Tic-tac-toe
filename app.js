@@ -49,6 +49,7 @@ const hoverImageSrc = document.querySelectorAll('.hover-image');
 const gridItems = document.querySelectorAll('.main-grid');
 const xScoreValue = document.querySelector('.x-score-value');
 const oScoreValue = document.querySelector('.o-score-value');
+const tiesScoreValue = document.querySelector('.ties-score-value');
 const resetButton = document.querySelector('.reset-button');
 const gameTiles = document.querySelectorAll('.tile');
 const popover = document.querySelector('.popover');
@@ -56,7 +57,10 @@ const popoverQuit = document.querySelector('.quit');
 const popoverNext = document.querySelector('.next-round');
 const popoverMsgTop = document.querySelector('.message-top-text');
 const popoverMiddleImg = document.querySelector('.middle-icon');
-const popoverMsgMiddle = document.querySelector('.message-middle-text')
+const popoverMsgMiddle = document.querySelector('.message-middle-text');
+let turnCount = 0;
+let ties = 0;
+let isWinner = false;
 
 
 //assets
@@ -165,6 +169,14 @@ newGameCpuBtn.addEventListener ('click', e => {
     //set hover image
     setHoverImage();
 
+    //if cpu goes first
+    if(playerTwo.playerIcon === xIcon){
+        setTimeout(() => {
+            cpuTurn();
+            playerIndicator.src = activePlayer.playerIcon;
+        },300);
+    };s
+
     console.log(playerOne);
     console.log(playerTwo);
 });
@@ -215,10 +227,13 @@ function setPlayerLabel(){
 }
 
 function checkWin(){
+    //inc turn count
+    turnCount++;
     //check for winning combo
-    if(tile1.classList.contains(activePlayer.PlayerName) && tile2.classList.contains(activePlayer.PlayerName) && tile3.classList.contains(activePlayer.PlayerName)
+    if(!isWinner){
+        if(tile1.classList.contains(activePlayer.PlayerName) && tile2.classList.contains(activePlayer.PlayerName) && tile3.classList.contains(activePlayer.PlayerName)
     || tile4.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile6.classList.contains(activePlayer.PlayerName)
-    || tile7.classList.contains(activePlayer.PlayerName) && tile8.classList.contains(activePlayer.PlayerName) && tile8.classList.contains(activePlayer.PlayerName)
+    || tile7.classList.contains(activePlayer.PlayerName) && tile8.classList.contains(activePlayer.PlayerName) && tile9.classList.contains(activePlayer.PlayerName)
     || tile1.classList.contains(activePlayer.PlayerName) && tile4.classList.contains(activePlayer.PlayerName) && tile7.classList.contains(activePlayer.PlayerName)
     || tile2.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile8.classList.contains(activePlayer.PlayerName)
     || tile3.classList.contains(activePlayer.PlayerName) && tile6.classList.contains(activePlayer.PlayerName) && tile9.classList.contains(activePlayer.PlayerName)
@@ -227,6 +242,8 @@ function checkWin(){
     {
         //increase score
         activePlayer.incScore();
+        //set winner var
+        isWinner = true;
         //output score
         if(activePlayer.playerIcon === xIcon){
             xScoreValue.textContent = activePlayer.score;
@@ -244,6 +261,7 @@ function checkWin(){
         };
 
         //styles on middle text
+        popoverMsgMiddle.textContent = 'TAKES THE ROUND'
         if(activePlayer.playerIcon === xIcon){
         popoverMsgMiddle.style.setProperty('color','var(--colour-accent-700)');
         }else if(activePlayer.playerIcon === oIcon){
@@ -255,9 +273,28 @@ function checkWin(){
         popoverMiddleImg.src = activePlayer.playerIcon;
 
         //show win popover
-        popover.classList.remove('display-none');
-    } 
-}
+        setTimeout(() => {
+            popover.classList.remove('display-none');
+        },500);
+        
+    }
+    else if(turnCount === 9)
+    {
+        ties++;
+        tiesScoreValue.textContent = ties;
+        popoverMsgTop.textContent = '';
+        popoverMsgMiddle.textContent = 'ROUND TIED';
+        popoverMsgMiddle.style.setProperty('color','var(--colour-neutral-500)');
+        popoverMiddleImg.src = '';
+
+        //show tie message
+        setTimeout(() => {
+            popover.classList.remove('display-none');
+        },500);
+    }
+};
+    };
+    
 
 
 //define active player
@@ -276,15 +313,14 @@ function setHoverImage(){
         if(!el.classList.contains('checked')){
             el.src = activePlayer.hoverIcon;
         };
-        
     })
 }
 
 //add marks to tiles on click
 mainGrid.addEventListener('click', e =>{
-    if(e.target.classList.contains('hover-image') && !e.target.classList.contains('checked')){
-        e.target.classList.add('display-none');
-        e.target.classList.add('checked');
+
+    function placeCheck(){
+        e.target.classList.add('display-none', 'checked');
         e.target.parentElement.classList.add(activePlayer.PlayerName);
         e.target.parentElement.children[1].setAttribute('src', activePlayer.playerIcon);
     
@@ -301,17 +337,32 @@ mainGrid.addEventListener('click', e =>{
         const thisTile = e.target.parentElement.classList[0];
         const thisTileI = tileArray.indexOf(thisTile);
         tileArray.splice(thisTileI,1);
-        console.log(tileArray);
+    }
 
+
+    if(playerOne.isCpu === false && playerTwo.isCpu === false){
+        if(e.target.classList.contains('hover-image') && !e.target.classList.contains('checked')){
+        placeCheck();
         checkWin();
         playerActive();
         playerIndicator.src = activePlayer.playerIcon;
         setHoverImage();
-        
-        console.log(playerOne);
-        console.log(playerTwo);
-        cpuTurn();
-    }   
+    }}
+    else{
+        if(e.target.classList.contains('hover-image') && !e.target.classList.contains('checked')){
+            placeCheck();
+            checkWin();
+            playerActive();
+            playerIndicator.src = activePlayer.playerIcon;
+            setHoverImage();
+
+            if(!isWinner){
+                cpuTurn();
+                playerIndicator.src = activePlayer.playerIcon;
+            };
+        }
+    }
+    
     
 })
 function getRandomInt(min, max) {
@@ -319,21 +370,38 @@ function getRandomInt(min, max) {
     const maxFloored = Math.floor(max);
     return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
   }
-  
 
 //cpu actions
 
 function cpuTurn(){
+    //set vars
     const rand = getRandomInt(0, tileArray.length);
     const RandTile = tileArray[rand];
     const tileEl = document.getElementsByClassName(RandTile);
-    playerIndicator.src = activePlayer.playerIcon;
-    tileEl[0].classList.add(activePlayer.PlayerName);
+    const currentTile = tileEl[0].classList[0];
+    const currentTileI = tileArray.indexOf(currentTile);
+
     tileEl[0].children[0].classList.add('display-none', 'checked');
-    setTimeout(() =>{
-        tileEl[0].children[1].src = activePlayer.playerIcon;
-    },300)
-    
+    tileArray.splice(currentTileI,1);
+
+    if(playerOne.isTurn === true){
+        tileEl[0].classList.add(playerOne.PlayerName);
+        setTimeout(() =>{
+            tileEl[0].children[1].src = playerOne.playerIcon;
+        },300);
+    }else{
+        tileEl[0].classList.add(playerTwo.PlayerName);
+        setTimeout(() =>{
+            tileEl[0].children[1].src = playerTwo.playerIcon;
+        },300);
+    }
+
+    checkWin();
+    playerOne.toggleTurn();
+    playerTwo.toggleTurn();
+    playerActive();
+    setHoverImage();
+
 }
 
 function resetGame(){
@@ -363,7 +431,9 @@ function resetGame(){
     setPlayerLabel();
     playerIndicator.src = activePlayer.playerIcon;
     setHoverImage();
-    tileArray = [tile1.classList[0], tile2.classList[0], tile3.classList[0], tile4.classList[0], tile5.classList[0], tile6.classList[0], tile7.classList[0], tile8.classList[0], tile9.classList[0]]
+    tileArray = [tile1.classList[0], tile2.classList[0], tile3.classList[0], tile4.classList[0], tile5.classList[0], tile6.classList[0], tile7.classList[0], tile8.classList[0], tile9.classList[0]];
+    turnCount = 0;
+    isWinner = false;
 }
 
 //reset game board on reset button click
@@ -375,6 +445,12 @@ resetButton.addEventListener('click', e => {
 popoverNext.addEventListener('click', e => {
     resetGame();
     popover.classList.add('display-none');
+    if(playerTwo.isCpu === true && playerTwo.playerIcon === xIcon){
+        setTimeout(() => {
+            cpuTurn();
+            playerIndicator.src = activePlayer.playerIcon;
+        },300)
+    }
 })
 
 popoverQuit.addEventListener('click', e => {
