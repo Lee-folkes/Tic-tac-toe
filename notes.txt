@@ -16,5 +16,11 @@ incTie
 toggleTurn - toggle isturn bool
 cpuMove - random cpuMove
 
+cpu logic-
+set array of all tiles
+on cpu turn, generate random number between 0 & length of array
+on player turn after click update array to only include un-ticked tiles
+
+
 
 

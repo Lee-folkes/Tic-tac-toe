@@ -47,6 +47,17 @@ const oLabel = document.querySelector('.o-player');
 const playerIndicator = document.querySelector('.active-player-icon');
 const hoverImageSrc = document.querySelectorAll('.hover-image');
 const gridItems = document.querySelectorAll('.main-grid');
+const xScoreValue = document.querySelector('.x-score-value');
+const oScoreValue = document.querySelector('.o-score-value');
+const resetButton = document.querySelector('.reset-button');
+const gameTiles = document.querySelectorAll('.tile');
+const popover = document.querySelector('.popover');
+const popoverQuit = document.querySelector('.quit');
+const popoverNext = document.querySelector('.next-round');
+const popoverMsgTop = document.querySelector('.message-top-text');
+const popoverMiddleImg = document.querySelector('.middle-icon');
+const popoverMsgMiddle = document.querySelector('.message-middle-text')
+
 
 //assets
 //solid icons
@@ -73,15 +84,17 @@ let activePlayer;
 let hoverImage;
 
 //tiles
-const tile1 = document.querySelector('.tile-1');
-const tile2 = document.querySelector('.tile-2');
-const tile3 = document.querySelector('.tile-3');
-const tile4 = document.querySelector('.tile-4');
-const tile5 = document.querySelector('.tile-5');
-const tile6 = document.querySelector('.tile-6');
-const tile7 = document.querySelector('.tile-7');
-const tile8 = document.querySelector('.tile-8');
-const tile9 = document.querySelector('.tile-9');
+const tile1 = document.querySelector('.tile1');
+const tile2 = document.querySelector('.tile2');
+const tile3 = document.querySelector('.tile3');
+const tile4 = document.querySelector('.tile4');
+const tile5 = document.querySelector('.tile5');
+const tile6 = document.querySelector('.tile6');
+const tile7 = document.querySelector('.tile7');
+const tile8 = document.querySelector('.tile8');
+const tile9 = document.querySelector('.tile9');
+
+let tileArray = [tile1.classList[0], tile2.classList[0], tile3.classList[0], tile4.classList[0], tile5.classList[0], tile6.classList[0], tile7.classList[0], tile8.classList[0], tile9.classList[0]]
 
 //player mark menu toggle states
 startIconO.addEventListener('click', e =>{
@@ -134,6 +147,7 @@ function newGameStart(){
      //set turn icon in top section
     playerIndicator.src = activePlayer.playerIcon;
     console.log(activePlayer.playerIcon);
+    
 }
 
 //setup player objects on button click
@@ -150,7 +164,7 @@ newGameCpuBtn.addEventListener ('click', e => {
     newGameStart();
     //set hover image
     setHoverImage();
- 
+
     console.log(playerOne);
     console.log(playerTwo);
 });
@@ -201,6 +215,7 @@ function setPlayerLabel(){
 }
 
 function checkWin(){
+    //check for winning combo
     if(tile1.classList.contains(activePlayer.PlayerName) && tile2.classList.contains(activePlayer.PlayerName) && tile3.classList.contains(activePlayer.PlayerName)
     || tile4.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile6.classList.contains(activePlayer.PlayerName)
     || tile7.classList.contains(activePlayer.PlayerName) && tile8.classList.contains(activePlayer.PlayerName) && tile8.classList.contains(activePlayer.PlayerName)
@@ -209,7 +224,39 @@ function checkWin(){
     || tile3.classList.contains(activePlayer.PlayerName) && tile6.classList.contains(activePlayer.PlayerName) && tile9.classList.contains(activePlayer.PlayerName)
     || tile1.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile9.classList.contains(activePlayer.PlayerName)
     || tile3.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile7.classList.contains(activePlayer.PlayerName))
-    {console.log(`${activePlayer.PlayerName} WINS!`)} 
+    {
+        //increase score
+        activePlayer.incScore();
+        //output score
+        if(activePlayer.playerIcon === xIcon){
+            xScoreValue.textContent = activePlayer.score;
+        }else{
+            oScoreValue.textContent = activePlayer.score;
+        };
+        //set win popover text values
+        //top message
+        if(activePlayer.PlayerName === 'PlayerOne'){
+            popoverMsgTop.textContent = 'PLAYER 1 WINS!';
+        }else if(activePlayer.PlayerName === 'PlayerTwo'){
+            popoverMsgTop.textContent = 'PLAYER 2 WINS!';
+        }else{
+            popoverMsgTop.textContent = '';
+        };
+
+        //styles on middle text
+        if(activePlayer.playerIcon === xIcon){
+        popoverMsgMiddle.style.setProperty('color','var(--colour-accent-700)');
+        }else if(activePlayer.playerIcon === oIcon){
+            popoverMsgMiddle.style.setProperty('color','var(--colour-accent-600)');
+        }else{
+            popoverMsgMiddle.style.setProperty('color','var(--colour-neutral-500)');
+        };
+        //set popover img
+        popoverMiddleImg.src = activePlayer.playerIcon;
+
+        //show win popover
+        popover.classList.remove('display-none');
+    } 
 }
 
 
@@ -240,8 +287,7 @@ mainGrid.addEventListener('click', e =>{
         e.target.classList.add('checked');
         e.target.parentElement.classList.add(activePlayer.PlayerName);
         e.target.parentElement.children[1].setAttribute('src', activePlayer.playerIcon);
-
-        
+    
         if(playerOne.isTurn === true){
             playerOne.isTurn = false;
             playerTwo.isTurn = true;
@@ -250,6 +296,13 @@ mainGrid.addEventListener('click', e =>{
             playerTwo.isTurn = false;
             playerOne.isTurn = true;
         }
+
+        //update tile array
+        const thisTile = e.target.parentElement.classList[0];
+        const thisTileI = tileArray.indexOf(thisTile);
+        tileArray.splice(thisTileI,1);
+        console.log(tileArray);
+
         checkWin();
         playerActive();
         playerIndicator.src = activePlayer.playerIcon;
@@ -257,12 +310,78 @@ mainGrid.addEventListener('click', e =>{
         
         console.log(playerOne);
         console.log(playerTwo);
-        
-        
-        
+        cpuTurn();
     }   
     
 })
+function getRandomInt(min, max) {
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+  }
+  
+
+//cpu actions
+
+function cpuTurn(){
+    const rand = getRandomInt(0, tileArray.length);
+    const RandTile = tileArray[rand];
+    const tileEl = document.getElementsByClassName(RandTile);
+    playerIndicator.src = activePlayer.playerIcon;
+    tileEl[0].classList.add(activePlayer.PlayerName);
+    tileEl[0].children[0].classList.add('display-none', 'checked');
+    setTimeout(() =>{
+        tileEl[0].children[1].src = activePlayer.playerIcon;
+    },300)
+    
+}
+
+function resetGame(){
+    gameTiles.forEach( el => {
+        if(el.classList.contains('PlayerOne'))
+        {
+            el.classList.remove('PlayerOne');
+        };
+        if (el.classList.contains('PlayerTwo'))
+        {
+            el.classList.remove('PlayerTwo');
+        };
+        if(el.children[0].classList.contains('checked'))
+        {
+            el.children[0].classList.remove('checked');
+        };
+        if(el.children[0].classList.contains('display-none'))
+        {
+            el.children[0].classList.remove('display-none');
+        };
+        el.children[1].src = '';
+    })
+    playerOne.isTurn = false;
+    playerTwo.isTurn = false;
+    goesFirst();
+    playerActive();
+    setPlayerLabel();
+    playerIndicator.src = activePlayer.playerIcon;
+    setHoverImage();
+    tileArray = [tile1.classList[0], tile2.classList[0], tile3.classList[0], tile4.classList[0], tile5.classList[0], tile6.classList[0], tile7.classList[0], tile8.classList[0], tile9.classList[0]]
+}
+
+//reset game board on reset button click
+resetButton.addEventListener('click', e => {
+    resetGame();
+})
+
+//popover buttons
+popoverNext.addEventListener('click', e => {
+    resetGame();
+    popover.classList.add('display-none');
+})
+
+popoverQuit.addEventListener('click', e => {
+    location.reload();
+})
+
+
 
 
 
