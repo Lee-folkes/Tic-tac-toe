@@ -108,8 +108,11 @@ function getRandomInt(min, max) {
     const maxFloored = Math.floor(max);
     return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
   }
+
+
   let targetIndex;
   
+  //AI logic
   function setTargetIndex() {
     let corners = [tile1, tile3, tile7, tile9];
     let cornerToTry = corners[getRandomInt(0,corners.length)];
@@ -175,7 +178,6 @@ function newGameStart(){
      //Show main game screen
      mainGameScr.classList.remove('display-none');
      //set turn icon in top section
-   
     activeMarker.src = setMarker;
 }
 
@@ -193,7 +195,6 @@ newGameCpuBtn.addEventListener ('click', e => {
     newGameStart();
     //set hover image
     setHoverImage();
-
     //if cpu goes first
     if(playerTwo.playerIcon === xIcon){
         setTimeout(() => {
@@ -203,10 +204,6 @@ newGameCpuBtn.addEventListener ('click', e => {
            
         },300);
     };
-
-    // console.log(playerOne);
-    // console.log(playerTwo);
-});
 
 newGamePlayerBtn.addEventListener ('click', e => {
     //decide who goes first
@@ -219,9 +216,6 @@ newGamePlayerBtn.addEventListener ('click', e => {
     newGameStart();
     //set hover image
     setHoverImage();
-
-    // console.log(playerOne);
-    // console.log(playerTwo);
 });
 
 
@@ -370,7 +364,6 @@ mainGrid.addEventListener('click', e =>{
         placeCheck();
         checkWin();
         playerActive();
-       
         setHoverImage();
     }}
     else{
@@ -395,10 +388,8 @@ mainGrid.addEventListener('click', e =>{
 
 function cpuTurn(target){
     //set vars
-    
     const RandTile = tileArray[target];
     const tileEl = document.getElementsByClassName(RandTile);
-    // console.log(target, RandTile, tileArray);
     const currentTile = tileEl[0].classList[0];
     const currentTileI = tileArray.indexOf(currentTile);
 
@@ -450,7 +441,6 @@ function resetGame(){
     goesFirst();
     playerActive();
     setPlayerLabel();
-   
     setHoverImage();
     tileArray = [tile1.classList[0], tile2.classList[0], tile3.classList[0], tile4.classList[0], tile5.classList[0], tile6.classList[0], tile7.classList[0], tile8.classList[0], tile9.classList[0]];
     turnCount = 0;
