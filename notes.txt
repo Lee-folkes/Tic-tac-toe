@@ -1,6 +1,6 @@
 player class 
 
-constuctors:
+constructors:
 playerName: player1 or player2
 score: 0
 playerIcon: svg
@@ -12,7 +12,7 @@ isturn: bool
 methods:
 incScore - increase score by one
 incWin
-incTie
+incTie -> remove
 toggleTurn - toggle isturn bool
 cpuMove - random cpuMove
 
@@ -21,6 +21,9 @@ set array of all tiles
 on cpu turn, generate random number between 0 & length of array
 on player turn after click update array to only include un-ticked tiles
 
+
+!!!!---->>>>
+pass random var into cpu turn function or pass value of preferred tile choice.
 
 
 

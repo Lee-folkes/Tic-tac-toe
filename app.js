@@ -1,5 +1,4 @@
 //setup player class
-//!!!---need to set hover icons---!!!
 Player = class{
     constructor(playerName, playerIcon, hoverIcon, isCpu){
         //player properties
@@ -44,12 +43,12 @@ const mainGameScr = document.querySelector('.main-game-screen')
 const mainGrid = document.querySelector('.main-grid');
 const xLabel = document.querySelector('.x-player');
 const oLabel = document.querySelector('.o-player');
-const playerIndicator = document.querySelector('.active-player-icon');
 const hoverImageSrc = document.querySelectorAll('.hover-image');
 const gridItems = document.querySelectorAll('.main-grid');
 const xScoreValue = document.querySelector('.x-score-value');
 const oScoreValue = document.querySelector('.o-score-value');
 const tiesScoreValue = document.querySelector('.ties-score-value');
+const activeMarker = document.querySelector('.active-player-icon');
 const resetButton = document.querySelector('.reset-button');
 const gameTiles = document.querySelectorAll('.tile');
 const popover = document.querySelector('.popover');
@@ -67,6 +66,7 @@ let isWinner = false;
 //solid icons
 const xIcon = './assets/icon-x.svg';
 const oIcon = './assets/icon-o.svg';
+let setMarker = oIcon;
 //hover icons
 const xIconHover = './assets/icon-x-outline.svg';
 const oIconHover = './assets/icon-o-outline.svg';
@@ -84,6 +84,7 @@ let oScoreLabel;
 //active player
 let activePlayer;
 
+
 //hover image
 let hoverImage;
 
@@ -99,6 +100,31 @@ const tile8 = document.querySelector('.tile8');
 const tile9 = document.querySelector('.tile9');
 
 let tileArray = [tile1.classList[0], tile2.classList[0], tile3.classList[0], tile4.classList[0], tile5.classList[0], tile6.classList[0], tile7.classList[0], tile8.classList[0], tile9.classList[0]]
+let board = [tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9]
+
+//generate random number for cpu turn
+function getRandomInt(min, max) {
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+  }
+  let targetIndex;
+  
+  function setTargetIndex() {
+    let corners = [tile1, tile3, tile7, tile9];
+    let cornerToTry = corners[getRandomInt(0,corners.length)];
+    //choose center square if free
+    if (tileArray.indexOf("tile5") !== -1) {targetIndex = tileArray.indexOf("tile5"); console.log('center chosen')}
+    //prefer corners every turn
+    else if (tileArray.indexOf(cornerToTry.classList[0]) !== -1) {targetIndex = tileArray.indexOf(cornerToTry.classList[0]); console.log('1: ', cornerToTry.classList[0])}
+    else if (tileArray.indexOf(cornerToTry.classList[0]) !== -1) {targetIndex = tileArray.indexOf(cornerToTry.classList[0]); console.log('2: ', cornerToTry.classList[0])}
+    else if (tileArray.indexOf(cornerToTry.classList[0]) !== -1) {targetIndex = tileArray.indexOf(cornerToTry.classList[0]); console.log('3: ', cornerToTry.classList[0])}
+    else if (tileArray.indexOf(cornerToTry.classList[0]) !== -1) {targetIndex = tileArray.indexOf(cornerToTry.classList[0]); console.log('4: ', cornerToTry.classList[0])}
+    else if (tileArray.indexOf(cornerToTry.classList[0]) !== -1) {targetIndex = tileArray.indexOf(cornerToTry.classList[0]); console.log('5: ', cornerToTry.classList[0])}
+    //if no corners then choose random free tile
+    else{targetIndex = getRandomInt(0, tileArray.length);}
+  }
+
 
 //player mark menu toggle states
 startIconO.addEventListener('click', e =>{
@@ -149,8 +175,9 @@ function newGameStart(){
      //Show main game screen
      mainGameScr.classList.remove('display-none');
      //set turn icon in top section
-    playerIndicator.src = activePlayer.playerIcon;
-    console.log(activePlayer.playerIcon);
+    // playerIndicator.src = activePlayer.playerIcon;
+    activeMarker.src = setMarker;
+    // console.log(activePlayer.playerIcon);
     
 }
 
@@ -172,13 +199,15 @@ newGameCpuBtn.addEventListener ('click', e => {
     //if cpu goes first
     if(playerTwo.playerIcon === xIcon){
         setTimeout(() => {
-            cpuTurn();
-            playerIndicator.src = activePlayer.playerIcon;
+            setTargetIndex();
+            cpuTurn(targetIndex);
+            playerActive();
+            // playerIndicator.src = activePlayer.playerIcon;
         },300);
-    };s
+    };
 
-    console.log(playerOne);
-    console.log(playerTwo);
+    // console.log(playerOne);
+    // console.log(playerTwo);
 });
 
 newGamePlayerBtn.addEventListener ('click', e => {
@@ -193,8 +222,8 @@ newGamePlayerBtn.addEventListener ('click', e => {
     //set hover image
     setHoverImage();
 
-    console.log(playerOne);
-    console.log(playerTwo);
+    // console.log(playerOne);
+    // console.log(playerTwo);
 });
 
 
@@ -295,8 +324,6 @@ function checkWin(){
 };
     };
     
-
-
 //define active player
 function playerActive(){
     if(playerOne.isTurn){
@@ -304,6 +331,12 @@ function playerActive(){
     }else{
         activePlayer = playerTwo;
     };
+    if(setMarker === xIcon){
+        setMarker = oIcon;
+    }else{
+        setMarker = xIcon;
+    }
+    activeMarker.src = setMarker;
 }
 
 //set hover image
@@ -323,15 +356,9 @@ mainGrid.addEventListener('click', e =>{
         e.target.classList.add('display-none', 'checked');
         e.target.parentElement.classList.add(activePlayer.PlayerName);
         e.target.parentElement.children[1].setAttribute('src', activePlayer.playerIcon);
-    
-        if(playerOne.isTurn === true){
-            playerOne.isTurn = false;
-            playerTwo.isTurn = true;
-
-        }else{
-            playerTwo.isTurn = false;
-            playerOne.isTurn = true;
-        }
+        
+        playerOne.toggleTurn();
+        playerTwo.toggleTurn();
 
         //update tile array
         const thisTile = e.target.parentElement.classList[0];
@@ -345,7 +372,7 @@ mainGrid.addEventListener('click', e =>{
         placeCheck();
         checkWin();
         playerActive();
-        playerIndicator.src = activePlayer.playerIcon;
+        // playerIndicator.src = activePlayer.playerIcon;
         setHoverImage();
     }}
     else{
@@ -353,31 +380,27 @@ mainGrid.addEventListener('click', e =>{
             placeCheck();
             checkWin();
             playerActive();
-            playerIndicator.src = activePlayer.playerIcon;
             setHoverImage();
 
             if(!isWinner){
-                cpuTurn();
-                playerIndicator.src = activePlayer.playerIcon;
+                setTargetIndex();
+                cpuTurn(targetIndex);
+                // playerIndicator.src = activePlayer.playerIcon;
             };
         }
     }
     
     
 })
-function getRandomInt(min, max) {
-    const minCeiled = Math.ceil(min);
-    const maxFloored = Math.floor(max);
-    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
-  }
 
 //cpu actions
 
-function cpuTurn(){
+function cpuTurn(target){
     //set vars
-    const rand = getRandomInt(0, tileArray.length);
-    const RandTile = tileArray[rand];
+    
+    const RandTile = tileArray[target];
     const tileEl = document.getElementsByClassName(RandTile);
+    // console.log(target, RandTile, tileArray);
     const currentTile = tileEl[0].classList[0];
     const currentTileI = tileArray.indexOf(currentTile);
 
@@ -395,12 +418,12 @@ function cpuTurn(){
             tileEl[0].children[1].src = playerTwo.playerIcon;
         },300);
     }
-
     checkWin();
     playerOne.toggleTurn();
     playerTwo.toggleTurn();
     playerActive();
     setHoverImage();
+
 
 }
 
@@ -429,7 +452,7 @@ function resetGame(){
     goesFirst();
     playerActive();
     setPlayerLabel();
-    playerIndicator.src = activePlayer.playerIcon;
+    // playerIndicator.src = activePlayer.playerIcon;
     setHoverImage();
     tileArray = [tile1.classList[0], tile2.classList[0], tile3.classList[0], tile4.classList[0], tile5.classList[0], tile6.classList[0], tile7.classList[0], tile8.classList[0], tile9.classList[0]];
     turnCount = 0;
@@ -447,8 +470,10 @@ popoverNext.addEventListener('click', e => {
     popover.classList.add('display-none');
     if(playerTwo.isCpu === true && playerTwo.playerIcon === xIcon){
         setTimeout(() => {
-            cpuTurn();
-            playerIndicator.src = activePlayer.playerIcon;
+            setTargetIndex();
+            cpuTurn(targetIndex);
+            playerActive();
+            // playerIndicator.src = activePlayer.playerIcon;
         },300)
     }
 })
