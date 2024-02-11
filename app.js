@@ -202,8 +202,9 @@ newGameCpuBtn.addEventListener ('click', e => {
             cpuTurn(targetIndex);
             playerActive();
            
-        },300);
-    };
+        },300);}
+    
+        });
 
 newGamePlayerBtn.addEventListener ('click', e => {
     //decide who goes first
