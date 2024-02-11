@@ -175,10 +175,8 @@ function newGameStart(){
      //Show main game screen
      mainGameScr.classList.remove('display-none');
      //set turn icon in top section
-    // playerIndicator.src = activePlayer.playerIcon;
+   
     activeMarker.src = setMarker;
-    // console.log(activePlayer.playerIcon);
-    
 }
 
 //setup player objects on button click
@@ -202,7 +200,7 @@ newGameCpuBtn.addEventListener ('click', e => {
             setTargetIndex();
             cpuTurn(targetIndex);
             playerActive();
-            // playerIndicator.src = activePlayer.playerIcon;
+           
         },300);
     };
 
@@ -372,7 +370,7 @@ mainGrid.addEventListener('click', e =>{
         placeCheck();
         checkWin();
         playerActive();
-        // playerIndicator.src = activePlayer.playerIcon;
+       
         setHoverImage();
     }}
     else{
@@ -385,7 +383,7 @@ mainGrid.addEventListener('click', e =>{
             if(!isWinner){
                 setTargetIndex();
                 cpuTurn(targetIndex);
-                // playerIndicator.src = activePlayer.playerIcon;
+               
             };
         }
     }
@@ -452,7 +450,7 @@ function resetGame(){
     goesFirst();
     playerActive();
     setPlayerLabel();
-    // playerIndicator.src = activePlayer.playerIcon;
+   
     setHoverImage();
     tileArray = [tile1.classList[0], tile2.classList[0], tile3.classList[0], tile4.classList[0], tile5.classList[0], tile6.classList[0], tile7.classList[0], tile8.classList[0], tile9.classList[0]];
     turnCount = 0;
@@ -462,6 +460,13 @@ function resetGame(){
 //reset game board on reset button click
 resetButton.addEventListener('click', e => {
     resetGame();
+    if(playerTwo.isCpu === true && playerTwo.playerIcon === xIcon){
+        setTimeout(() => {
+            setTargetIndex();
+            cpuTurn(targetIndex);
+            playerActive();
+        },300)
+    }
 })
 
 //popover buttons
@@ -473,7 +478,6 @@ popoverNext.addEventListener('click', e => {
             setTargetIndex();
             cpuTurn(targetIndex);
             playerActive();
-            // playerIndicator.src = activePlayer.playerIcon;
         },300)
     }
 })
