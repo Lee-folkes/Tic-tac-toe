@@ -421,6 +421,14 @@ select {
     background-color: var(--colour-accent-600-hover);
 }
 
+/* styles to highlight cells on win */
+.x-tile-win{
+    background-color: var(--colour-accent-700);
+}
+
+.o-tile-win{
+    background-color: var(--colour-accent-600);
+}
 
 
 

@@ -248,72 +248,144 @@ function setPlayerLabel(){
 
 }
 
+//to execute on matching a win condition
+function winActions(){
+    //increase score
+    activePlayer.incScore();
+    //set winner var
+    isWinner = true;
+    //output score
+    if(activePlayer.playerIcon === xIcon){
+        xScoreValue.textContent = activePlayer.score;
+    }else{
+        oScoreValue.textContent = activePlayer.score;
+    };
+    //set win popover text values
+    //top message
+    if(activePlayer.PlayerName === 'PlayerOne'){
+        popoverMsgTop.textContent = 'PLAYER 1 WINS!';
+    }else if(activePlayer.PlayerName === 'PlayerTwo'){
+        popoverMsgTop.textContent = 'PLAYER 2 WINS!';
+    }else{
+        popoverMsgTop.textContent = '';
+    };
+
+    //styles on middle text
+    popoverMsgMiddle.textContent = 'TAKES THE ROUND'
+    if(activePlayer.playerIcon === xIcon){
+    popoverMsgMiddle.style.setProperty('color','var(--colour-accent-700)');
+    }else if(activePlayer.playerIcon === oIcon){
+        popoverMsgMiddle.style.setProperty('color','var(--colour-accent-600)');
+    }else{
+        popoverMsgMiddle.style.setProperty('color','var(--colour-neutral-500)');
+    };
+    //set popover img
+    popoverMiddleImg.src = activePlayer.playerIcon;
+
+    //show win popover
+    setTimeout(() => {
+        popover.classList.remove('display-none');
+    },500);
+}
+
+//function to highlight cells on matching win condition
+
+function highlightCells(a, b, c){
+    if(activePlayer.playerIcon === xIcon){
+        a.classList.add('x-tile-win');
+        b.classList.add('x-tile-win');
+        c.classList.add('x-tile-win');
+        a.children[1].classList.add('icon-filter-bg');
+        b.children[1].classList.add('icon-filter-bg');
+        c.children[1].classList.add('icon-filter-bg');
+    }
+    else if(activePlayer.playerIcon === oIcon){
+        a.classList.add('o-tile-win');
+        b.classList.add('o-tile-win');
+        c.classList.add('o-tile-win');
+        a.children[1].classList.add('icon-filter-bg');
+        b.children[1].classList.add('icon-filter-bg');
+        c.children[1].classList.add('icon-filter-bg');
+    }
+}
+
 function checkWin(){
     //inc turn count
     turnCount++;
     //check for winning combo
     if(!isWinner){
-        if(tile1.classList.contains(activePlayer.PlayerName) && tile2.classList.contains(activePlayer.PlayerName) && tile3.classList.contains(activePlayer.PlayerName)
-    || tile4.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile6.classList.contains(activePlayer.PlayerName)
-    || tile7.classList.contains(activePlayer.PlayerName) && tile8.classList.contains(activePlayer.PlayerName) && tile9.classList.contains(activePlayer.PlayerName)
-    || tile1.classList.contains(activePlayer.PlayerName) && tile4.classList.contains(activePlayer.PlayerName) && tile7.classList.contains(activePlayer.PlayerName)
-    || tile2.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile8.classList.contains(activePlayer.PlayerName)
-    || tile3.classList.contains(activePlayer.PlayerName) && tile6.classList.contains(activePlayer.PlayerName) && tile9.classList.contains(activePlayer.PlayerName)
-    || tile1.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile9.classList.contains(activePlayer.PlayerName)
-    || tile3.classList.contains(activePlayer.PlayerName) && tile5.classList.contains(activePlayer.PlayerName) && tile7.classList.contains(activePlayer.PlayerName))
-    {
-        //increase score
-        activePlayer.incScore();
-        //set winner var
-        isWinner = true;
-        //output score
-        if(activePlayer.playerIcon === xIcon){
-            xScoreValue.textContent = activePlayer.score;
-        }else{
-            oScoreValue.textContent = activePlayer.score;
-        };
-        //set win popover text values
-        //top message
-        if(activePlayer.PlayerName === 'PlayerOne'){
-            popoverMsgTop.textContent = 'PLAYER 1 WINS!';
-        }else if(activePlayer.PlayerName === 'PlayerTwo'){
-            popoverMsgTop.textContent = 'PLAYER 2 WINS!';
-        }else{
-            popoverMsgTop.textContent = '';
-        };
+        if (
+          tile1.classList.contains(activePlayer.PlayerName) &&
+          tile2.classList.contains(activePlayer.PlayerName) &&
+          tile3.classList.contains(activePlayer.PlayerName)
+        ) {
+          highlightCells(tile1, tile2, tile3);
+          winActions();
+        } else if (
+          tile4.classList.contains(activePlayer.PlayerName) &&
+          tile5.classList.contains(activePlayer.PlayerName) &&
+          tile6.classList.contains(activePlayer.PlayerName)
+        ) {
+          highlightCells(tile4, tile5, tile6);
+          winActions();
+        } else if (
+          tile7.classList.contains(activePlayer.PlayerName) &&
+          tile8.classList.contains(activePlayer.PlayerName) &&
+          tile9.classList.contains(activePlayer.PlayerName)
+        ) {
+          highlightCells(tile7, tile8, tile9);
+          winActions();
+        } else if (
+          tile1.classList.contains(activePlayer.PlayerName) &&
+          tile4.classList.contains(activePlayer.PlayerName) &&
+          tile7.classList.contains(activePlayer.PlayerName)
+        ) {
+          highlightCells(tile1, tile4, tile7);
+          winActions();
+        } else if (
+          tile2.classList.contains(activePlayer.PlayerName) &&
+          tile5.classList.contains(activePlayer.PlayerName) &&
+          tile8.classList.contains(activePlayer.PlayerName)
+        ) {
+          highlightCells(tile2, tile5, tile8);
+          winActions();
+        } else if (
+          tile3.classList.contains(activePlayer.PlayerName) &&
+          tile6.classList.contains(activePlayer.PlayerName) &&
+          tile9.classList.contains(activePlayer.PlayerName)
+        ) {
+          highlightCells(tile3, tile6, tile9);
+          winActions();
+        } else if (
+          tile1.classList.contains(activePlayer.PlayerName) &&
+          tile5.classList.contains(activePlayer.PlayerName) &&
+          tile9.classList.contains(activePlayer.PlayerName)
+        ) {
+          highlightCells(tile1, tile5, tile9);
+          winActions();
+        } else if (
+          tile3.classList.contains(activePlayer.PlayerName) &&
+          tile5.classList.contains(activePlayer.PlayerName) &&
+          tile7.classList.contains(activePlayer.PlayerName)
+        ) {
+          highlightCells(tile3, tile5, tile7);
+          winActions();
+        } else if (turnCount === 9) {
+          ties++;
+          tiesScoreValue.textContent = ties;
+          popoverMsgTop.textContent = "";
+          popoverMsgMiddle.textContent = "ROUND TIED";
+          popoverMsgMiddle.style.setProperty(
+            "color",
+            "var(--colour-neutral-500)"
+          );
+          popoverMiddleImg.src = "";
 
-        //styles on middle text
-        popoverMsgMiddle.textContent = 'TAKES THE ROUND'
-        if(activePlayer.playerIcon === xIcon){
-        popoverMsgMiddle.style.setProperty('color','var(--colour-accent-700)');
-        }else if(activePlayer.playerIcon === oIcon){
-            popoverMsgMiddle.style.setProperty('color','var(--colour-accent-600)');
-        }else{
-            popoverMsgMiddle.style.setProperty('color','var(--colour-neutral-500)');
-        };
-        //set popover img
-        popoverMiddleImg.src = activePlayer.playerIcon;
-
-        //show win popover
-        setTimeout(() => {
-            popover.classList.remove('display-none');
-        },500);
-        
-    }
-    else if(turnCount === 9)
-    {
-        ties++;
-        tiesScoreValue.textContent = ties;
-        popoverMsgTop.textContent = '';
-        popoverMsgMiddle.textContent = 'ROUND TIED';
-        popoverMsgMiddle.style.setProperty('color','var(--colour-neutral-500)');
-        popoverMiddleImg.src = '';
-
-        //show tie message
-        setTimeout(() => {
-            popover.classList.remove('display-none');
-        },500);
-    }
+          //show tie message
+          setTimeout(() => {
+            popover.classList.remove("display-none");
+          }, 500);
+        }
 };
     };
     
@@ -435,6 +507,17 @@ function resetGame(){
         {
             el.children[0].classList.remove('display-none');
         };
+        if(el.classList.contains('x-tile-win'))
+        {
+            el.classList.remove('x-tile-win');
+            el.children[1].classList.remove('icon-filter-bg');
+        };
+        if(el.classList.contains('o-tile-win'))
+        {
+            el.classList.remove('o-tile-win');
+            el.children[1].classList.remove('icon-filter-bg');
+        };
+        
         el.children[1].src = '';
     })
     playerOne.isTurn = false;

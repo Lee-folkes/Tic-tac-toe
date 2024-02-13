@@ -23,7 +23,9 @@ on player turn after click update array to only include un-ticked tiles
 
 
 !!!!---->>>>
-pass random var into cpu turn function or pass value of preferred tile choice.
+pass random var into cpu turn function or pass value of preferred tile choice. - Done!
+
+>>>Need to fix mobile layout!
 
 
 
