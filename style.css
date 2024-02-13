@@ -424,10 +424,13 @@ select {
 /* styles to highlight cells on win */
 .x-tile-win{
     background-color: var(--colour-accent-700);
+    box-shadow: 0 8px #118c87;
+
 }
 
 .o-tile-win{
     background-color: var(--colour-accent-600);
+    box-shadow: 0 8px #cc8b13;
 }
 
 

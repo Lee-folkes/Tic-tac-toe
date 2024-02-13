@@ -254,34 +254,65 @@ function winActions(){
     activePlayer.incScore();
     //set winner var
     isWinner = true;
-    //output score
-    if(activePlayer.playerIcon === xIcon){
+     //output score
+     if(activePlayer.playerIcon === xIcon){
         xScoreValue.textContent = activePlayer.score;
     }else{
         oScoreValue.textContent = activePlayer.score;
     };
-    //set win popover text values
-    //top message
-    if(activePlayer.PlayerName === 'PlayerOne'){
-        popoverMsgTop.textContent = 'PLAYER 1 WINS!';
-    }else if(activePlayer.PlayerName === 'PlayerTwo'){
-        popoverMsgTop.textContent = 'PLAYER 2 WINS!';
-    }else{
-        popoverMsgTop.textContent = '';
-    };
-
-    //styles on middle text
-    popoverMsgMiddle.textContent = 'TAKES THE ROUND'
-    if(activePlayer.playerIcon === xIcon){
-    popoverMsgMiddle.style.setProperty('color','var(--colour-accent-700)');
-    }else if(activePlayer.playerIcon === oIcon){
-        popoverMsgMiddle.style.setProperty('color','var(--colour-accent-600)');
-    }else{
-        popoverMsgMiddle.style.setProperty('color','var(--colour-neutral-500)');
-    };
+    
     //set popover img
     popoverMiddleImg.src = activePlayer.playerIcon;
 
+    //check if game is vs player or cpu and format popover accordingly
+    //if vs cpu
+    if(playerTwo.isCpu){
+        //top message
+      if (activePlayer.PlayerName === "PlayerOne") {
+        popoverMsgTop.textContent = "YOU WON!";
+      } else if (activePlayer.PlayerName === "PlayerTwo") {
+        popoverMsgTop.textContent = "OH NO, YOU LOST...";
+      } else {
+        popoverMsgTop.textContent = "";
+      }
+
+      //styles on middle text
+      popoverMsgMiddle.textContent = "TAKES THE ROUND";
+      if (activePlayer.playerIcon === xIcon) {
+        popoverMsgMiddle.style.setProperty("color", "var(--colour-accent-700)");
+      } else if (activePlayer.playerIcon === oIcon) {
+        popoverMsgMiddle.style.setProperty("color", "var(--colour-accent-600)");
+      } else {
+        popoverMsgMiddle.style.setProperty(
+          "color",
+          "var(--colour-neutral-500)"
+        );
+      }
+    }
+    //if vs player
+    else{
+      //top message
+      if (activePlayer.PlayerName === "PlayerOne") {
+        popoverMsgTop.textContent = "PLAYER 1 WINS!";
+      } else if (activePlayer.PlayerName === "PlayerTwo") {
+        popoverMsgTop.textContent = "PLAYER 2 WINS!";
+      } else {
+        popoverMsgTop.textContent = "";
+      }
+
+      //styles on middle text
+      popoverMsgMiddle.textContent = "TAKES THE ROUND";
+      if (activePlayer.playerIcon === xIcon) {
+        popoverMsgMiddle.style.setProperty("color", "var(--colour-accent-700)");
+      } else if (activePlayer.playerIcon === oIcon) {
+        popoverMsgMiddle.style.setProperty("color", "var(--colour-accent-600)");
+      } else {
+        popoverMsgMiddle.style.setProperty(
+          "color",
+          "var(--colour-neutral-500)"
+        );
+      }
+    }
     //show win popover
     setTimeout(() => {
         popover.classList.remove('display-none');
