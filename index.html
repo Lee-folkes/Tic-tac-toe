@@ -1,98 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- STYLES -->
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css" />
 
     <!-- TYPOGRAPHY -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
 
     <title>Tic Tac Toe</title>
-</head>
-<body>
+  </head>
+  <body>
     <main>
+      <!-- NEW GAME SCREEN -->
+      <div class="new-game-scr">
+        <div class="logo"><img src="./assets/logo.svg" alt="" srcset="" /></div>
+        <div class="new-game-card">
+          <h1>PICK PLAYER 1'S MARK</h1>
+          <div class="mark-choice-wrapper">
+            <div class="mark-x mark">
+              <img
+                class="icon-filter-silver"
+                src="./assets/icon-x.svg"
+                alt=""
+                srcset=""
+              />
+            </div>
+            <div class="mark-o mark mark-active">
+              <img
+                class="icon-filter-bg"
+                src="./assets/icon-o.svg"
+                alt=""
+                srcset=""
+              />
+            </div>
+          </div>
+          <h2>REMEMBER : X GOES FIRST</h2>
+        </div>
+        <div class="new-game-buttons">
+          <button class="new-game-cpu-button">NEW GAME (VS CPU)</button>
+          <button class="new-game-player-button">NEW GAME (VS PLAYER)</button>
+        </div>
+      </div>
 
-        <!-- NEW GAME SCREEN -->
-        <div class="new-game-scr container">
-            <div class="logo"><img src="./assets/logo.svg" alt="" srcset=""></div>
-            <div class="new-game-card">
-                <h1>PICK PLAYER 1'S MARK</h1>
-                <div class="mark-choice-wrapper">
-                    <div class="mark-x mark"><img class="icon-filter-silver" src="./assets/icon-x.svg" alt="" srcset=""></div>
-                    <div class="mark-o mark mark-active"><img class="icon-filter-bg" src="./assets/icon-o.svg" alt="" srcset=""></div>
-                </div>
-                <h2>REMEMBER : X GOES FIRST</h2>
-            </div>
-            <div class="new-game-buttons">
-                <button class="new-game-cpu-button">NEW GAME (VS CPU)</button>
-                <button class="new-game-player-button">NEW GAME (VS PLAYER)</button>
-            </div>
+      <!-- Main Game Screen -->
+      <div class="main-game-screen container display-none">
+        <div class="game-board-top">
+          <div class="logo-left"><img src="./assets/logo.svg" alt="" /></div>
+          <div class="active-player-indicator">
+            <img
+              class="active-player-icon icon-filter-silver"
+              src="./assets/icon-x.svg"
+              alt=""
+            /><span>TURN</span>
+          </div>
+          <div class="reset-button">
+            <button class="reset-button">
+              <img src="./assets/icon-restart.svg" alt="" srcset="" />
+            </button>
+          </div>
+        </div>
+        <div class="main-grid">
+          <div class="tile1 tile">
+            <img class="hover-image" src="" alt="" /><img
+              src=""
+              alt=""
+              class="mark-image"
+            />
+          </div>
+          <div class="tile2 tile">
+            <img class="hover-image" src="" alt="" /><img
+              src=""
+              alt=""
+              class="mark-image"
+            />
+          </div>
+          <div class="tile3 tile">
+            <img class="hover-image" src="" alt="" /><img
+              src=""
+              alt=""
+              class="mark-image"
+            />
+          </div>
+          <div class="tile4 tile">
+            <img class="hover-image" src="" alt="" /><img
+              src=""
+              alt=""
+              class="mark-image"
+            />
+          </div>
+          <div class="tile5 tile">
+            <img class="hover-image" src="" alt="" /><img
+              src=""
+              alt=""
+              class="mark-image"
+            />
+          </div>
+          <div class="tile6 tile">
+            <img class="hover-image" src="" alt="" /><img
+              src=""
+              alt=""
+              class="mark-image"
+            />
+          </div>
+          <div class="tile7 tile">
+            <img class="hover-image" src="" alt="" /><img
+              src=""
+              alt=""
+              class="mark-image"
+            />
+          </div>
+          <div class="tile8 tile">
+            <img class="hover-image" src="" alt="" /><img
+              src=""
+              alt=""
+              class="mark-image"
+            />
+          </div>
+          <div class="tile9 tile">
+            <img class="hover-image" src="" alt="" /><img
+              src=""
+              alt=""
+              class="mark-image"
+            />
+          </div>
         </div>
 
-        <!-- Main Game Screen -->
-        <div class="main-game-screen container display-none">
-            <div class="game-board-top">
-                <div class="logo-left"><img src="./assets/logo.svg" alt=""></div>
-                <div class="active-player-indicator"><img class="active-player-icon icon-filter-silver" src="./assets/icon-x.svg" alt=""><span>TURN</span></div>
-                <div class="reset-button"><button class="reset-button"><img src="./assets/icon-restart.svg" alt="" srcset=""></button></div>
+        <!-- Popover on win -->
+        <div class="popover display-none">
+          <div class="banner">
+            <div class="message-top">
+              <span class="message-top-text">OH NO, YOU LOST...</span>
             </div>
-            <div class="main-grid">
-                <div class="tile1 tile"><img class="hover-image" src="" alt=""><img src="" alt="" class="mark-image"></div>
-                <div class="tile2 tile"><img class="hover-image" src="" alt=""><img src="" alt="" class="mark-image"></div>
-                <div class="tile3 tile"><img class="hover-image" src="" alt=""><img src="" alt="" class="mark-image"></div>
-                <div class="tile4 tile"><img class="hover-image" src="" alt=""><img src="" alt="" class="mark-image"></div>
-                <div class="tile5 tile"><img class="hover-image" src="" alt=""><img src="" alt="" class="mark-image"></div>
-                <div class="tile6 tile"><img class="hover-image" src="" alt=""><img src="" alt="" class="mark-image"></div>
-                <div class="tile7 tile"><img class="hover-image" src="" alt=""><img src="" alt="" class="mark-image"></div>
-                <div class="tile8 tile"><img class="hover-image" src="" alt=""><img src="" alt="" class="mark-image"></div>
-                <div class="tile9 tile"><img class="hover-image" src="" alt=""><img src="" alt="" class="mark-image"></div>
+            <div class="message-middle">
+              <img class="middle-icon" src="./assets/icon-o.svg" alt="" /><span
+                class="message-middle-text"
+                >TAKES THE ROUND</span
+              >
             </div>
-
-            <!-- Popover on win -->
-            <div class="popover display-none">
-                <div class="banner">
-                    <div class="message-top">
-                        <span class="message-top-text">OH NO, YOU LOST...</span>
-                    </div>
-                    <div class="message-middle">
-                        <img class="middle-icon" src="./assets/icon-o.svg" alt=""><span class="message-middle-text">TAKES THE ROUND</span>
-                    </div>
-                    <div class="buttons-bottom">
-                        <button class="quit">QUIT</button>
-                        <button class="next-round">NEXT ROUND</button>
-                    </div>
-                </div>
+            <div class="buttons-bottom">
+              <button class="quit">QUIT</button>
+              <button class="next-round">NEXT ROUND</button>
             </div>
-            <div class="game-board-bottom">
-                <div class="x-score score">
-                    <div class="player-info-wrapper">
-                        <span>X</span><span class="x-player"> (YOU)</span>
-                    </div>
-                    <div class="score-value-wrapper">
-                        <span class="x-score-value">0</span>
-                    </div>
-                </div>
-                <div class="ties-score score"><span>TIES</span>
-                    <span class="ties-score-value">0</span></div>
-                <div class="o-score score">
-                    <div class="player-info-wrapper">
-                        <span>O</span><span class="o-player"> (CPU)</span>
-                    </div>
-                    <div class="score-value-wrapper">
-                        <span class="o-score-value">0</span>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-
-
+        <div class="game-board-bottom">
+          <div class="x-score score">
+            <div class="player-info-wrapper">
+              <span>X</span><span class="x-player"> (YOU)</span>
+            </div>
+            <div class="score-value-wrapper">
+              <span class="x-score-value">0</span>
+            </div>
+          </div>
+          <div class="ties-score score">
+            <span>TIES</span> <span class="ties-score-value">0</span>
+          </div>
+          <div class="o-score score">
+            <div class="player-info-wrapper">
+              <span>O</span><span class="o-player"> (CPU)</span>
+            </div>
+            <div class="score-value-wrapper">
+              <span class="o-score-value">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
     <!-- JS -->
     <script src="./app.js"></script>
-</body>
+  </body>
 </html>

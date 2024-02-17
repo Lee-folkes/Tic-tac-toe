@@ -105,7 +105,6 @@ let tileArray = [
   tile8.classList[0],
   tile9.classList[0],
 ];
-let board = [tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9];
 
 //generate random number for cpu turn
 function getRandomInt(min, max) {
@@ -272,6 +271,7 @@ function winActions() {
   popoverMiddleImg.src = activePlayer.playerIcon;
 
   //check if game is vs player or cpu and format popover accordingly
+  
   //if vs cpu
   if (playerTwo.isCpu) {
     //top message
@@ -282,17 +282,8 @@ function winActions() {
     } else {
       popoverMsgTop.textContent = "";
     }
-
-    //styles on middle text
-    popoverMsgMiddle.textContent = "TAKES THE ROUND";
-    if (activePlayer.playerIcon === xIcon) {
-      popoverMsgMiddle.style.setProperty("color", "var(--colour-accent-700)");
-    } else if (activePlayer.playerIcon === oIcon) {
-      popoverMsgMiddle.style.setProperty("color", "var(--colour-accent-600)");
-    } else {
-      popoverMsgMiddle.style.setProperty("color", "var(--colour-neutral-500)");
-    }
   }
+
   //if vs player
   else {
     //top message
@@ -303,17 +294,18 @@ function winActions() {
     } else {
       popoverMsgTop.textContent = "";
     }
-
-    //styles on middle text
-    popoverMsgMiddle.textContent = "TAKES THE ROUND";
-    if (activePlayer.playerIcon === xIcon) {
-      popoverMsgMiddle.style.setProperty("color", "var(--colour-accent-700)");
-    } else if (activePlayer.playerIcon === oIcon) {
-      popoverMsgMiddle.style.setProperty("color", "var(--colour-accent-600)");
-    } else {
-      popoverMsgMiddle.style.setProperty("color", "var(--colour-neutral-500)");
-    }
   }
+
+   //styles on middle text
+   popoverMsgMiddle.textContent = "TAKES THE ROUND";
+   if (activePlayer.playerIcon === xIcon) {
+     popoverMsgMiddle.style.setProperty("color", "var(--colour-accent-700)");
+   } else if (activePlayer.playerIcon === oIcon) {
+     popoverMsgMiddle.style.setProperty("color", "var(--colour-accent-600)");
+   } else {
+     popoverMsgMiddle.style.setProperty("color", "var(--colour-neutral-500)");
+   }
+
   //show win popover
   setTimeout(() => {
     popover.classList.remove("display-none");
