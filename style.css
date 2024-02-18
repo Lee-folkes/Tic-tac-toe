@@ -319,6 +319,13 @@ select {
     opacity: 1;
 }
 
+/* only display hover effect at larger screen sizes */
+@media(max-width: 770px){
+    .hover-image:hover {
+        opacity: 0;
+    }
+}
+
 /* bottom section */
 
 .game-board-bottom {
@@ -372,10 +379,13 @@ select {
     align-items: center;
     justify-content: center;
     position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
     background-color: rgba(0, 0, 0, 0.555);
     /* width: 100dvw;
     height: 100dvh; */
-    width: 100%;
     height: 100%;
     letter-spacing: 0.88px;
 }
@@ -408,13 +418,13 @@ select {
     color: var(--colour-accent-600);
 }
 
-.buttons-bottom {
+.buttons-bottom, .reset-menu-btn {
     display: flex;
     gap: 1rem;
 }
 
 .quit,
-.next-round {
+.next-round, .restart, .cancel {
     cursor: pointer;
     color: var(--colour-bg-800);
     font-weight: 700;
@@ -423,21 +433,21 @@ select {
     border: none;
 }
 
-.quit {
+.quit, .cancel {
     background-color: var(--colour-neutral-500);
     box-shadow: 0 4px #a8bfc946;
 }
 
-.next-round {
+.next-round, .restart {
     background-color: var(--colour-accent-600);
     box-shadow: 0 4px #cc8b13;
 }
 
-.quit:hover {
+.quit:hover, .cancel:hover {
     background-color: var(--colour-neutral-500-hover);
 }
 
-.next-round:hover {
+.next-round:hover, .restart:hover {
     background-color: var(--colour-accent-600-hover);
 }
 
@@ -456,14 +466,23 @@ select {
 /* @media */
 /* Mobile Screens */
 @media(max-width:500px){
-    .new-game-card, .new-game-buttons, .main-game-screen, .game-board-top, .new-game-scr, .game-board-bottom {
+    .main-game-screen, .game-board-top, .game-board-bottom {
         min-width: 350px;
+    }
+    .new-game-scr, .new-game-card, .new-game-buttons button{
+        min-width: 350px;
+    }
+    .mark{
+        min-width: 150px;
     }
     .tile{
         min-width: 110px;
     }
     .score{
         width: 110px;
+    }
+    .message-middle{
+        font-size: var(--fs-heading-m);
     }
 }
 

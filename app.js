@@ -56,6 +56,12 @@ const popoverNext = document.querySelector(".next-round");
 const popoverMsgTop = document.querySelector(".message-top-text");
 const popoverMiddleImg = document.querySelector(".middle-icon");
 const popoverMsgMiddle = document.querySelector(".message-middle-text");
+const popoverButtonsBottom = document.querySelector('.buttons-bottom');
+const resetMenuButtons = document.querySelector('.reset-menu-btn');
+const buttonRestart = document.querySelector('.restart');
+const buttonCancel = document.querySelector('.cancel');
+
+//counters & toggles
 let turnCount = 0;
 let ties = 0;
 let isWinner = false;
@@ -559,15 +565,34 @@ function resetGame() {
 
 //reset game board on reset button click
 resetButton.addEventListener("click", (e) => {
-  resetGame();
-  if (playerTwo.isCpu === true && playerTwo.playerIcon === xIcon) {
-    setTimeout(() => {
-      setTargetIndex();
-      cpuTurn(targetIndex);
-      playerActive();
-    }, 300);
-  }
+  popoverButtonsBottom.classList.add('display-none');
+  resetMenuButtons.classList.remove('display-none');
+  popover.classList.remove('display-none');
+  popoverMsgTop.textContent = "";
+  popoverMsgMiddle.textContent = "RESTART GAME?";
+  popoverMsgMiddle.style.setProperty("color", "var(--colour-neutral-500)");
+  popoverMiddleImg.src = "";
 });
+
+buttonRestart.addEventListener('click', (e) => {
+    resetGame();
+    if (playerTwo.isCpu === true && playerTwo.playerIcon === xIcon) {
+      setTimeout(() => {
+        setTargetIndex();
+        cpuTurn(targetIndex);
+        playerActive();
+      }, 300);
+  }
+  popover.classList.add('display-none');
+  resetMenuButtons.classList.add('display-none');
+  popoverButtonsBottom.classList.remove('display-none');
+});
+
+buttonCancel.addEventListener('click', (e) => {
+  popover.classList.add('display-none');
+  resetMenuButtons.classList.add('display-none');
+  popoverButtonsBottom.classList.remove('display-none');
+})
 
 //popover buttons
 popoverNext.addEventListener("click", (e) => {
