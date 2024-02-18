@@ -239,6 +239,7 @@ select {
     display: flex;
     justify-content: space-between;
     min-width: var(--board-min-width);
+    
 }
 
 .logo-left {
@@ -483,6 +484,9 @@ select {
     }
     .message-middle{
         font-size: var(--fs-heading-m);
+    }
+    .main-grid{
+        padding-top: 3rem;
     }
 }
 
